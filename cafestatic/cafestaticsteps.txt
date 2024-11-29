@@ -1,0 +1,37 @@
+cafe static steps
+//plugins- cloudbees Docker Build and Publish plugin
+
+New item -> static_step1 (freestyle and create)
+Source code management
+(choose git repo url from VIJETH2001)
+change to main or master
+Build Steps
+->Execute shell
+(paste this)
+# Navigate to the workspace
+cd $WORKSPACE
+
+# Start Apache service
+sudo service apache2 start
+
+# Copy project files to the Apache server's web directory
+sudo cp -r * /var/www/html/
+
+# Restart Apache service to apply the changes
+sudo service apache2 restart
+
+save and build now
+go to browser and search localhost(cafe web is deployed now)
+
+New item-> static_step2
+copy from static_step1
+add build step-> Docker Build and Publish
+->repo name- vijeth2001/staticapp
+->tag- v1
+-> registry credentials-(choose docker credentials) 
+Add build step -> Execute shell
+docker run -it -d 8001:8081 vijeth2001/staticapp
+save and build
+
+go to browser and type localhost:8001
+

@@ -1,0 +1,11 @@
+docker logging in
+
+sudo su jenkins
+-> docker login
+(enter docker login credentials) 
+
+on terminal 
+sudo docker login (Add credentials)
+sudo goupadd docker
+sudo usermod -aG docker jenkins
+
