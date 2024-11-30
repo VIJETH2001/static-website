@@ -14,7 +14,7 @@ RUN apt-get update && \
 WORKDIR /app
 
 # Define the repository and deployment details as build arguments
-ARG REPO_URL="https://github.com/Tarun177/static-website.git"
+ARG REPO_URL="https://github.com/VIJETH2001/static-website-vijeth.git"
 ARG BRANCH="main"
 ARG DEPLOY_DIR="/var/www/html/cafe"
 ARG PORT=8081
