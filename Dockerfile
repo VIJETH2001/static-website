@@ -1,35 +1,14 @@
-# Use an official Python image as the base
-FROM python:3.9-slim
+# Use an official Apache HTTP server image
+FROM httpd:2.4
 
-# Set environment variables for non-interactive installation
-ENV DEBIAN_FRONTEND=noninteractive
+# Set the maintainer label
+LABEL maintainer="neehar2601"
 
-# Install Git to clone the repository
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    git \
-    && rm -rf /var/lib/apt/lists/*
+# Copy the static website files to the Apache document root
+COPY static-website/ /usr/local/apache2/htdocs/
 
-# Set working directory for the app inside the container
-WORKDIR /app
+# Expose port 80 to allow web traffic
+EXPOSE 80
 
-# Define the repository and deployment details as build arguments
-ARG REPO_URL="https://github.com/VIJETH2001/static-website-vijeth.git"
-ARG BRANCH="main"
-ARG DEPLOY_DIR="/var/www/html/cafe"
-ARG PORT=8081
-
-# Step 1: Clone the GitHub repository
-RUN git clone -b "$BRANCH" "$REPO_URL" /app/static-website
-
-# Step 2: Deploy the website (copy the repo contents into the final deploy directory)
-RUN mkdir -p "$DEPLOY_DIR" && \
-    cp -r /app/static-website/* "$DEPLOY_DIR" && \
-    chown -R www-data:www-data "$DEPLOY_DIR" && \
-    chmod -R 755 "$DEPLOY_DIR"
-
-# Expose the port that the Python HTTP server will use
-EXPOSE 8081
-
-# Step 3: Start the Python HTTP server to serve the static files
-CMD ["python3", "-m", "http.server", "8081", "--directory", "/var/www/html/cafe"]
+# Start the Apache server
+CMD ["httpd-foreground"]
