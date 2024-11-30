@@ -2,7 +2,7 @@
 FROM httpd:2.4
 
 # Set the maintainer label
-LABEL maintainer="neehar2601"
+LABEL maintainer="vijeth2001"
 
 # Copy the static website files to the Apache document root
 COPY static-website/ /usr/local/apache2/htdocs/
